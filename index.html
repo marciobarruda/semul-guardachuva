@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Secretaria da Mulher do Recife • Portal de Serviços</title>
+    <link rel="icon" href="https://statics.recife.pe.gov.br/images/automacao/cnh-social/icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+    <style>
+      :root {
+        --brand-primary: #0053a4;
+        --brand-secondary: #003a73;
+        --brand-highlight: #00a3ff;
+        --surface: #ffedd4;
+        --surface-strong: #ffffff;
+        --border-color: #d0d7e2;
+        --text-strong: #1b263b;
+        --text-muted: #5b6c8c;
+      }
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+
+      .visually-hidden {
+        position: absolute !important;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Public Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text-strong);
+        min-height: 100vh;
+      }
+
+      header.site-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        height: 385px;
+        min-height: 385px;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      header.site-header picture {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+
+      header.site-header .hero-image {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      header .lead {
+        color: rgba(255, 255, 255, 0.82);
+        max-width: 100%;
+        font-size: 1rem;
+        line-height: 1.65;
+        text-align: justify;
+      }
+
+      .badge-open {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        background-color: rgba(255, 255, 255, 0.14);
+      }
+
+      .user-greeting {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        padding: 1rem 1.5rem;
+        border-radius: 1rem;
+        background: linear-gradient(135deg, rgba(0, 83, 164, 0.09), rgba(0, 163, 255, 0.12));
+        color: var(--text-strong);
+        box-shadow: 0 10px 30px rgba(0, 45, 98, 0.08);
+      }
+
+      .user-greeting::before {
+        content: "👋";
+        font-size: 1.4rem;
+      }
+
+      .minhas-inscricoes-grid {
+        margin-top: 1rem;
+      }
+
+      .minhas-inscricao-card {
+        cursor: pointer;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+        border: 1px solid rgba(0, 83, 164, 0.12);
+        border-radius: 4px;
+      }
+
+      .minhas-inscricao-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 30px rgba(0, 45, 98, 0.12);
+      }
+
+      .minhas-inscricao-card.is-loading {
+        pointer-events: none;
+        opacity: 0.7;
+      }
+
+      .minhas-inscricoes-placeholder {
+        padding: 1.25rem;
+        border-radius: 4px;
+        background: rgba(0, 83, 164, 0.05);
+        border: 1px dashed rgba(0, 83, 164, 0.2);
+        color: var(--text-muted);
+      }
+
+      .resumo-inscricao-list dt {
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .resumo-inscricao-list dd {
+        font-weight: 600;
+        color: var(--text-strong);
+      }
+
+      .resumo-inscricao-pre {
+        white-space: pre-wrap;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        font-size: 0.95rem;
+        background: rgba(0, 83, 164, 0.08);
+        color: var(--brand-secondary);
+        padding: 1rem;
+        border-radius: 0.75rem;
+      }
+
+      .publicacoes-panel,
+      .updates-panel {
+        border-radius: 4px;
+      }
+
+      .download-card strong {
+        font-size: 1rem;
+        color: var(--text-strong);
+      }
+
+      .download-card p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.4;
+      }
+
+      .download-card a {
+        font-weight: 600;
+      }
+
+      .btn-submit.is-disabled {
+        cursor: not-allowed;
+        opacity: 0.65;
+        box-shadow: none;
+      }
+
+      .btn-submit.is-disabled:focus-visible {
+        box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.35);
+      }
+
+      input[type="text"],
+      textarea {
+        text-transform: uppercase;
+      }
+
+      input[type="email"] {
+        text-transform: lowercase;
+      }
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        background-color: rgba(17, 24, 39, 0.6);
+        z-index: 2000;
+      }
+
+      .modal-backdrop.is-open {
+        display: flex;
+      }
+
+      .modal-card {
+        width: min(32rem, 100%);
+        max-height: 90vh;
+        overflow-y: auto;
+        background: var(--surface-strong);
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 24px 48px rgba(15, 23, 42, 0.28);
+        outline: none;
+        position: relative;
+      }
+
+      .modal-title {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+      }
+
+      .title--alerta {
+        color: #c53030;
+      }
+
+      .title--sucesso {
+        color: #1b873f;
+      }
+
+      .modal-message {
+        margin-bottom: 1rem;
+        color: var(--text-strong);
+      }
+
+      .modal-list {
+        padding-left: 1.25rem;
+        margin: 0;
+        color: var(--text-strong);
+        list-style: disc;
+      }
+
+      .modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      .modal-close-button {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        font-size: 1.5rem;
+        cursor: pointer;
+        line-height: 1;
+      }
+
+      .modal-close-button:focus-visible {
+        outline: 2px solid var(--brand-highlight);
+        outline-offset: 2px;
+      }
+
+      .error-text {
+        display: block;
+        margin-top: 0.35rem;
+        font-size: 0.85rem;
+        color: #c53030;
+      }
+
+      .is-invalid {
+        border-color: #c53030 !important;
+      }
+
+      .form-check-input.is-invalid {
+        border-color: #c53030;
+        box-shadow: none;
+      }
+
+      .form-check .error-text {
+        margin-left: 1.75rem;
+      }
+
+      #publicacoes-list li + li {
+        margin-top: 0.75rem;
+      }
+
+      .publicacoes-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .publicacoes-item-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+      }
+
+      .publicacoes-item-icon {
+        display: inline-block;
+        width: 1.5rem;
+        height: 1.5rem;
+        flex-shrink: 0;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+
+      .publicacoes-item-icon--pdf {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23d32f2f' d='M6 2h7l5 5v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z'/%3E%3Cpath fill='%23ef5350' d='M13 2v5h5'/%3E%3Ctext x='12' y='17' text-anchor='middle' font-family='Arial, sans-serif' font-size='7' font-weight='700' fill='%23fff'%3EPDF%3C/text%3E%3C/svg%3E");
+      }
+
+      .publicacoes-item-icon--image {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='3' y='4' width='18' height='16' rx='2' fill='%23215695'/%3E%3Crect x='4.5' y='5.5' width='15' height='13' rx='1.2' fill='%233968c8'/%3E%3Ccircle cx='9' cy='11' r='2.2' fill='%23fff59d'/%3E%3Cpath fill='%23c5cae9' d='M6 18l4.2-4.6 2.7 3.2 2.6-3L18 18z'/%3E%3C/svg%3E");
+      }
+
+      .publicacoes-item-icon--generic {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%233f51b5' d='M7 2h7l5 5v15a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z'/%3E%3Cpath fill='%235c6bc0' d='M14 2v5h5'/%3E%3Crect x='8.5' y='12' width='7' height='1.5' rx='.75' fill='%23c5cae9'/%3E%3Crect x='8.5' y='15' width='5' height='1.5' rx='.75' fill='%23c5cae9'/%3E%3C/svg%3E");
+      }
+
+      .publicacoes-item time {
+        flex-shrink: 0;
+      }
+
+      @media (min-width: 576px) {
+        .publicacoes-item {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+
+      @media (max-width: 575.98px) {
+        .publicacoes-item-link {
+          align-items: flex-start;
+        }
+      }
+
+      .updates-panel {
+        border-left: 3px solid var(--brand-highlight);
+        padding-left: 1.2rem;
+        color: var(--text-muted);
+      }
+
+      .updates-panel time {
+        font-size: 0.85rem;
+        color: var(--brand-secondary);
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      footer {
+        color: var(--text-muted);
+        padding: 2.5rem 0 2rem;
+        font-size: 0.9rem;
+      }
+
+      main {
+        padding: 0.75rem 0 4rem;
+      }
+
+      .form-wrapper {
+        background: transparent;
+        border-radius: 1.5rem;
+        padding: clamp(1.5rem, 2vw + 1rem, 3rem);
+        box-shadow: none;
+      }
+
+      .form-wrapper form {
+        margin: 0;
+      }
+
+      .section-nav {
+        position: relative;
+        z-index: 1;
+        padding: 0;
+        margin-bottom: clamp(1.5rem, 1.25rem + 1vw, 2.25rem);
+      }
+
+      .section-nav__inner {
+        border-radius: 1.5rem;
+        padding: clamp(0.5rem, 0.25rem + 1vw, 1.25rem);
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.5rem, 0.25rem + 0.75vw, 1.5rem);
+      }
+
+      .section-nav__top {
+        display: flex;
+        align-items: center;
+        gap: clamp(0.75rem, 0.5rem + 1vw, 2rem);
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .section-nav__eyebrow {
+        font-size: 0.95rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 600;
+        color: var(--brand-secondary);
+      }
+
+      .section-nav__registration {
+        margin-left: auto;
+        padding: 0.65rem 1rem;
+        border-radius: 0.85rem;
+        background: rgba(0, 83, 164, 0.06);
+        border: 1px solid rgba(0, 83, 164, 0.2);
+        min-width: clamp(12rem, 11rem + 4vw, 16rem);
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+
+      .section-nav__registration-label {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        font-weight: 600;
+      }
+
+      .section-nav__registration-value {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--brand-secondary);
+        letter-spacing: 0.02em;
+      }
+
+      .section-nav__list {
+        --step-size: 2.75rem;
+        --step-progress: 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: clamp(0.5rem, 0.5rem + 1vw, 1.75rem);
+        list-style: none;
+        padding: 0 clamp(0.5rem, 0.25rem + 1vw, 1.5rem) 0;
+        margin: 0;
+        position: relative;
+      }
+
+      .section-nav__list::before,
+      .section-nav__list::after {
+        content: "";
+        position: absolute;
+        top: calc(var(--step-size) / 2);
+        left: calc(var(--step-size) / 2);
+        height: 4px;
+        width: calc(100% - var(--step-size));
+        border-radius: 999px;
+        transform: translateY(-50%);
+      }
+
+      .section-nav__list::before {
+        background: #e2e6ef;
+        z-index: 0;
+      }
+
+      .section-nav__list::after {
+        background: linear-gradient(90deg, #2ecc71 0%, #2ecc71 55%, #0d6efd 100%);
+        transform-origin: left center;
+        transform: scaleX(var(--step-progress));
+        transition: transform 0.35s ease;
+        z-index: 1;
+      }
+
+      .section-nav__item {
+        position: relative;
+        flex: 1;
+        min-width: 6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        z-index: 2;
+      }
+
+      .section-nav__link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--step-size);
+        height: var(--step-size);
+        border-radius: 50%;
+        border: 3px solid #cfd5e4;
+        background: #ffffff;
+        color: #7b8ba6;
+        font-weight: 700;
+        font-size: 1rem;
+        box-shadow: 0 6px 14px rgba(15, 23, 42, 0.12);
+        transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+        cursor: pointer;
+        position: relative;
+      }
+
+      .section-nav__icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        font-size: 1.2rem;
+      }
+
+      .section-nav__icon i {
+        line-height: 1;
+      }
+
+      .section-nav__link:hover,
+      .section-nav__link:focus-visible {
+        border-color: var(--brand-highlight);
+        color: var(--brand-highlight);
+        outline: none;
+      }
+
+      .section-nav__link.is-active {
+        border-color: #0d6efd;
+        color: #0d6efd;
+        box-shadow: 0 8px 20px rgba(13, 110, 253, 0.25);
+      }
+
+      .section-nav__link.is-complete {
+        background: linear-gradient(135deg, #2ecc71, #1fab63);
+        border-color: transparent;
+        color: #ffffff;
+      }
+
+      .section-nav__link.is-complete .section-nav__icon {
+        opacity: 0;
+      }
+
+      .section-nav__link.is-complete::after {
+        content: "\2713";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+      }
+
+      .section-nav__label {
+        font-size: 0.9rem;
+        text-align: center;
+        color: var(--brand-secondary);
+        font-weight: 600;
+        line-height: 1.3;
+        max-width: 8.5rem;
+      }
+
+      .section-nav__item.is-complete .section-nav__label {
+        color: #1fab63;
+      }
+
+      .section-nav__item.is-active .section-nav__label {
+        color: #0d6efd;
+      }
+
+      .step-actions {
+        margin-top: clamp(1.5rem, 1.1rem + 1vw, 2.5rem);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .step-actions__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.6rem;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-weight: 600;
+        font-size: 1rem;
+        line-height: 1;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 246, 230, 0.9));
+        color: var(--brand-secondary);
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease, background 0.2s ease;
+      }
+
+      .step-actions__button--next {
+        margin-left: auto;
+      }
+
+      .step-actions__button:hover,
+      .step-actions__button:focus-visible {
+        transform: translateY(-1px);
+        box-shadow: 0 12px 26px rgba(15, 23, 42, 0.18);
+        outline: none;
+      }
+
+      .step-actions__button:focus-visible {
+        filter: brightness(1.03);
+      }
+
+      .step-actions__button--next {
+        background: linear-gradient(135deg, var(--brand-primary), var(--brand-highlight));
+        color: #ffffff;
+      }
+
+      .step-actions__button--next:hover,
+      .step-actions__button--next:focus-visible {
+        filter: saturate(1.05);
+      }
+
+      .step-actions__button--prev {
+        border: 1px solid rgba(0, 83, 164, 0.25);
+        color: var(--brand-secondary);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 246, 230, 0.88));
+      }
+
+      .step-actions__button--prev:hover,
+      .step-actions__button--prev:focus-visible {
+        border-color: rgba(0, 163, 255, 0.55);
+        color: var(--brand-primary);
+      }
+
+      .step-actions__button i {
+        font-size: 1.25rem;
+      }
+
+      @media (max-width: 575.98px) {
+        .step-actions {
+          padding: 0.75rem 0.875rem;
+        }
+
+        .step-actions__button {
+          width: 100%;
+          margin-left: 0;
+        }
+      }
+
+      .card-section {
+        border: 1px solid var(--border-color);
+        border-radius: 1rem;
+        background: var(--surface-strong);
+        box-shadow: 0 12px 30px rgba(24, 64, 120, 0.08);
+      }
+
+      .form-step {
+        display: none;
+      }
+
+      .form-step.is-active {
+        display: block;
+      }
+
+      .form-section {
+        scroll-margin-top: 7rem;
+      }
+
+      .form-section + .form-section {
+        margin-top: 1.5rem;
+      }
+
+      .section-divider {
+        margin: 2rem 0 1.5rem;
+        border: 0;
+        border-top: 1px dashed var(--border-color);
+      }
+
+      .form-subsection {
+        margin-top: 1.5rem;
+      }
+
+      .subsection-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      @media (max-width: 768px) {
+        header.site-header {
+          padding: 0;
+        }
+
+        .badge-open {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .section-title {
+          justify-content: flex-start;
+        }
+
+        .section-nav {
+          padding: 0;
+        }
+
+        .section-nav__inner {
+          padding: 1rem 0;
+        }
+
+        .section-nav__top {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+
+        .section-nav__registration {
+          width: 100%;
+        }
+
+        .section-nav__list {
+          --step-size: 2.5rem;
+          flex-wrap: wrap;
+          gap: 1rem;
+          padding: 0;
+        }
+
+        .section-nav__list::before,
+        .section-nav__list::after {
+          display: none;
+        }
+
+        .section-nav__item {
+          flex: 1 0 45%;
+        }
+
+        .section-nav__label {
+          max-width: none;
+          font-size: 0.9rem;
+        }
+      }
+
+      @media (max-width: 767.98px) {
+        header.site-header {
+          height: 184px;
+          min-height: 184px;
+        }
+      }
+
+      .section-header {
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.75rem;
+        margin-bottom: 1.25rem;
+      }
+
+      .required::after {
+        content: "*";
+        color: #d32f2f;
+        margin-left: 0.25rem;
+      }
+
+      .form-text {
+        color: var(--text-muted);
+      }
+
+      .file-input-wrapper {
+        border: 1px dashed var(--border-color);
+        border-radius: 0.75rem;
+        padding: 1rem;
+        background: rgba(0, 83, 164, 0.03);
+      }
+
+      .file-input-wrapper label {
+        font-weight: 600;
+      }
+
+      .file-name {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        margin-top: 0.25rem;
+      }
+
+      .toast-container {
+        z-index: 1080;
+      }
+
+      .legend-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.85rem;
+        color: var(--brand-secondary);
+        background: rgba(0, 83, 164, 0.12);
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+      }
+
+      .tooltip-inner {
+        text-align: left;
+      }
+
+      .btn-outline-primary:focus-visible,
+      .form-control:focus,
+      .form-select:focus,
+      .form-check-input:focus {
+        box-shadow: 0 0 0 0.25rem rgba(0, 83, 164, 0.25);
+        border-color: var(--brand-highlight);
+      }
+
+      .border-dashed {
+        border-style: dashed !important;
+      }
+    </style>
+  </head>
+
+  <body class="bg-light">
+    <header class="site-header position-relative text-white" style="background: linear-gradient(120deg, rgba(0,83,164,0.9), rgba(0,163,255,0.6));">
+      <div class="position-absolute top-0 start-0 end-0 h-100" style="background: url('https://images.pexels.com/photos/1181562/pexels-photo-1181562.jpeg?auto=compress&cs=tinysrgb&w=1600') center/cover no-repeat; opacity: 0.25;"></div>
+      <div class="container position-relative py-5">
+        <div class="row align-items-center">
+          <div class="col-lg-7">
+            <p class="badge-open mb-3"><i class="bi bi-heart-fill"></i> Secretaria da Mulher do Recife</p>
+            <h1 class="display-5 fw-bold mb-3">Portal de Serviços</h1>
+            <p class="lead">Acolhimento, proteção e oportunidades para as mulheres recifenses. Conheça os serviços da Secretaria da Mulher e inscreva-se para receber apoio especializado.</p>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <a class="btn btn-light btn-lg text-primary fw-semibold px-4" href="#servicos">Ver serviços</a>
+              <a class="btn btn-outline-light btn-lg fw-semibold px-4" href="#formularios">Ir para inscrições</a>
+            </div>
+          </div>
+          <div class="col-lg-5 text-lg-end mt-4 mt-lg-0">
+            <div class="p-4 bg-white text-dark rounded-4 shadow-lg">
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <span class="badge bg-primary-subtle text-primary fw-semibold px-3 py-2">Atendimento</span>
+                <span class="text-muted">Atualizado</span>
+              </div>
+              <h2 class="h4 mb-3">Apoio integral para mulheres</h2>
+              <p class="mb-0 text-muted">Informação clara, canais de denúncia e oportunidades de formação em um só lugar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="servicos" class="py-5">
+        <div class="container">
+          <div class="section-header d-flex justify-content-between align-items-center">
+            <div>
+              <p class="text-uppercase text-muted fw-semibold mb-1">Nossos serviços</p>
+              <h2 class="h3 fw-bold mb-0">Programas de acolhimento e fortalecimento</h2>
+            </div>
+            <a class="btn btn-outline-primary" href="#formularios">Fazer inscrição</a>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="card h-100 shadow-sm border-0">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="badge bg-primary-subtle text-primary fw-semibold">Proteção</span>
+                    <i class="bi bi-shield-lock text-primary fs-4"></i>
+                  </div>
+                  <h3 class="h5 fw-bold">Tá com Elas</h3>
+                  <p class="text-muted flex-grow-1">Canal de denúncia e acolhimento para mulheres em situação de violência. Atendimento humanizado e sigiloso.</p>
+                  <a class="btn btn-primary mt-3" href="#form-tacomelas">Inscrever-se</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card h-100 shadow-sm border-0">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="badge bg-info-subtle text-info fw-semibold">Acolhimento</span>
+                    <i class="bi bi-hospital text-info fs-4"></i>
+                  </div>
+                  <h3 class="h5 fw-bold">Centro Marta Almeida</h3>
+                  <p class="text-muted flex-grow-1">Espaço de cuidado multidisciplinar, apoio psicológico, orientação social e jurídica.</p>
+                  <a class="btn btn-info text-white mt-3" href="#form-centro">Inscrever-se</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card h-100 shadow-sm border-0">
+                <div class="card-body d-flex flex-column">
+                  <div class="d-flex align-items-center justify-content-between mb-3">
+                    <span class="badge bg-success-subtle text-success fw-semibold">Renda</span>
+                    <i class="bi bi-bag-heart text-success fs-4"></i>
+                  </div>
+                  <h3 class="h5 fw-bold">Rede de Artesãs</h3>
+                  <p class="text-muted flex-grow-1">Formação, feiras colaborativas e oportunidades de comercialização para mulheres empreendedoras.</p>
+                  <a class="btn btn-success mt-3" href="#form-artesas">Inscrever-se</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="destaques" class="py-5 bg-white border-top">
+        <div class="container">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-6">
+              <div class="p-4 p-lg-5 bg-primary text-white rounded-4 shadow-lg h-100">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <i class="bi bi-info-circle fs-4"></i>
+                  <div>
+                    <p class="text-uppercase mb-0" style="letter-spacing: 0.08em;">Por que se inscrever?</p>
+                    <h3 class="h4 fw-bold mb-0">Rede de apoio segura e humanizada</h3>
+                  </div>
+                </div>
+                <ul class="list-unstyled mb-4 small">
+                  <li class="d-flex gap-2 mb-2"><i class="bi bi-check-circle"></i><span>Acompanhamento profissional especializado.</span></li>
+                  <li class="d-flex gap-2 mb-2"><i class="bi bi-check-circle"></i><span>Conexão com oportunidades de capacitação e renda.</span></li>
+                  <li class="d-flex gap-2 mb-2"><i class="bi bi-check-circle"></i><span>Atendimento em espaços seguros e preparados.</span></li>
+                  <li class="d-flex gap-2"><i class="bi bi-check-circle"></i><span>Acesso a informação confiável e canais oficiais.</span></li>
+                </ul>
+                <div class="d-flex flex-wrap gap-3">
+                  <div class="legend-badge"><i class="bi bi-shield-check"></i> Sigilo garantido</div>
+                  <div class="legend-badge"><i class="bi bi-people"></i> Equipe multidisciplinar</div>
+                  <div class="legend-badge"><i class="bi bi-globe"></i> Atendimento híbrido</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="row g-4">
+                <div class="col-12">
+                  <div class="p-4 bg-white border rounded-3 shadow-sm h-100">
+                    <div class="d-flex align-items-start gap-3">
+                      <div class="rounded-circle bg-primary-subtle text-primary p-3"><i class="bi bi-telephone fs-4"></i></div>
+                      <div>
+                        <h4 class="h6 fw-bold mb-1">Atendimento 24h</h4>
+                        <p class="text-muted small mb-2">Ligue para o Plantão da Mulher: <strong>0800 281 0107</strong> ou 180 para denunciar.</p>
+                        <p class="text-muted small mb-0">Canais digitais com resposta rápida e direcionamento seguro.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="p-4 bg-white border rounded-3 shadow-sm h-100">
+                    <div class="d-flex align-items-start gap-3">
+                      <div class="rounded-circle bg-success-subtle text-success p-3"><i class="bi bi-calendar-event fs-4"></i></div>
+                      <div>
+                        <h4 class="h6 fw-bold mb-1">Agendamento facilitado</h4>
+                        <p class="text-muted small mb-0">Selecione o melhor horário e espaço de atendimento. Receba confirmação por e-mail e WhatsApp.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="p-4 bg-white border rounded-3 shadow-sm h-100">
+                    <div class="d-flex align-items-start gap-3">
+                      <div class="rounded-circle bg-warning-subtle text-warning p-3"><i class="bi bi-journal-text fs-4"></i></div>
+                      <div>
+                        <h4 class="h6 fw-bold mb-1">Documentação simplificada</h4>
+                        <p class="text-muted small mb-0">Envie documentos essenciais, acompanhe o status e atualize dados sempre que precisar.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="formularios" class="py-5" style="background: linear-gradient(180deg, rgba(255,237,212,0.6), rgba(255,255,255,0.9));">
+        <div class="container">
+          <div class="section-header text-center">
+            <p class="text-uppercase text-muted fw-semibold mb-1">Inscrições</p>
+            <h2 class="h3 fw-bold">Escolha o serviço e preencha os dados</h2>
+            <p class="text-muted mb-0">As informações são sigilosas e ajudam nossa equipe a oferecer o melhor acolhimento.</p>
+          </div>
+
+          <div class="row g-4">
+            <div class="col-lg-4">
+              <div class="p-4 bg-white rounded-4 shadow-sm border h-100">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div class="rounded-circle bg-primary-subtle text-primary p-3"><i class="bi bi-shield-lock fs-4"></i></div>
+                  <div>
+                    <p class="text-uppercase small text-muted mb-1">Formulário</p>
+                    <h3 class="h5 fw-bold mb-0">Tá com Elas</h3>
+                  </div>
+                </div>
+                <form id="form-tacomelas" class="needs-validation" novalidate>
+                  <div class="mb-3">
+                    <label class="form-label required" for="nome-tacomelas">Nome completo</label>
+                    <input class="form-control" id="nome-tacomelas" name="nome" type="text" required />
+                    <div class="invalid-feedback">Informe seu nome.</div>
+                  </div>
+                  <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label class="form-label required" for="cpf-tacomelas">CPF</label>
+                      <input class="form-control" id="cpf-tacomelas" name="cpf" type="text" placeholder="000.000.000-00" required />
+                      <div class="invalid-feedback">Informe um CPF válido.</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label required" for="nascimento-tacomelas">Data de nascimento</label>
+                      <input class="form-control" id="nascimento-tacomelas" name="nascimento" type="date" required />
+                      <div class="invalid-feedback">Informe sua data de nascimento.</div>
+                    </div>
+                  </div>
+                  <div class="row g-3 mt-1">
+                    <div class="col-sm-6">
+                      <label class="form-label required" for="telefone-tacomelas">Telefone</label>
+                      <input class="form-control" id="telefone-tacomelas" name="telefone" type="tel" placeholder="(81) 9 0000-0000" required />
+                      <div class="invalid-feedback">Informe um telefone para contato.</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label" for="email-tacomelas">E-mail</label>
+                      <input class="form-control" id="email-tacomelas" name="email" type="email" placeholder="seunome@email.com" />
+                      <div class="invalid-feedback">Digite um e-mail válido.</div>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label required" for="bairro-tacomelas">Bairro</label>
+                    <input class="form-control" id="bairro-tacomelas" name="bairro" type="text" required />
+                    <div class="invalid-feedback">Informe seu bairro.</div>
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label required" for="relato-tacomelas">Relato ou necessidade</label>
+                    <textarea class="form-control" id="relato-tacomelas" name="relato" rows="3" required placeholder="Conte resumidamente o que aconteceu e como podemos ajudar"></textarea>
+                    <div class="form-text">Todas as informações são sigilosas.</div>
+                    <div class="invalid-feedback">Compartilhe um breve relato para orientar o atendimento.</div>
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label" for="preferencia-tacomelas">Preferência de contato</label>
+                    <select class="form-select" id="preferencia-tacomelas" name="preferencia">
+                      <option value="">Selecione</option>
+                      <option>Telefone</option>
+                      <option>WhatsApp</option>
+                      <option>E-mail</option>
+                    </select>
+                  </div>
+                  <div class="form-check mt-3">
+                    <input class="form-check-input" id="sigilo-tacomelas" type="checkbox" required />
+                    <label class="form-check-label required" for="sigilo-tacomelas">Confirmo que as informações são verdadeiras e autorizo contato sigiloso.</label>
+                    <div class="invalid-feedback">Confirme para prosseguir.</div>
+                  </div>
+                  <button class="btn btn-primary w-100 mt-3" type="submit">Enviar inscrição</button>
+                </form>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="p-4 bg-white rounded-4 shadow-sm border h-100">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div class="rounded-circle bg-info-subtle text-info p-3"><i class="bi bi-hospital fs-4"></i></div>
+                  <div>
+                    <p class="text-uppercase small text-muted mb-1">Formulário</p>
+                    <h3 class="h5 fw-bold mb-0">Centro Marta Almeida</h3>
+                  </div>
+                </div>
+                <form id="form-centro" class="needs-validation" novalidate>
+                  <div class="mb-3">
+                    <label class="form-label required" for="nome-centro">Nome completo</label>
+                    <input class="form-control" id="nome-centro" name="nome" type="text" required />
+                    <div class="invalid-feedback">Informe seu nome.</div>
+                  </div>
+                  <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label class="form-label required" for="cpf-centro">CPF</label>
+                      <input class="form-control" id="cpf-centro" name="cpf" type="text" placeholder="000.000.000-00" required />
+                      <div class="invalid-feedback">Informe um CPF válido.</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label required" for="nascimento-centro">Data de nascimento</label>
+                      <input class="form-control" id="nascimento-centro" name="nascimento" type="date" required />
+                      <div class="invalid-feedback">Informe sua data de nascimento.</div>
+                    </div>
+                  </div>
+                  <div class="row g-3 mt-1">
+                    <div class="col-sm-6">
+                      <label class="form-label required" for="telefone-centro">Telefone</label>
+                      <input class="form-control" id="telefone-centro" name="telefone" type="tel" placeholder="(81) 9 0000-0000" required />
+                      <div class="invalid-feedback">Informe um telefone para contato.</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label" for="email-centro">E-mail</label>
+                      <input class="form-control" id="email-centro" name="email" type="email" placeholder="seunome@email.com" />
+                      <div class="invalid-feedback">Digite um e-mail válido.</div>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label required" for="bairro-centro">Bairro</label>
+                    <input class="form-control" id="bairro-centro" name="bairro" type="text" required />
+                    <div class="invalid-feedback">Informe seu bairro.</div>
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label required" for="servico-centro">Qual serviço você busca?</label>
+                    <select class="form-select" id="servico-centro" name="servico" required>
+                      <option value="">Selecione</option>
+                      <option>Acolhimento psicológico</option>
+                      <option>Orientação social</option>
+                      <option>Orientação jurídica</option>
+                      <option>Atendimento multidisciplinar</option>
+                    </select>
+                    <div class="invalid-feedback">Escolha um serviço.</div>
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label" for="horario-centro">Horário preferencial</label>
+                    <select class="form-select" id="horario-centro" name="horario">
+                      <option value="">Selecione</option>
+                      <option>Manhã</option>
+                      <option>Tarde</option>
+                      <option>Noite</option>
+                    </select>
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label" for="observacoes-centro">Observações</label>
+                    <textarea class="form-control" id="observacoes-centro" name="observacoes" rows="3" placeholder="Conte mais sobre sua necessidade"></textarea>
+                  </div>
+                  <div class="form-check mt-3">
+                    <input class="form-check-input" id="sigilo-centro" type="checkbox" required />
+                    <label class="form-check-label required" for="sigilo-centro">Confirmo que as informações são verdadeiras e autorizo contato sigiloso.</label>
+                    <div class="invalid-feedback">Confirme para prosseguir.</div>
+                  </div>
+                  <button class="btn btn-info text-white w-100 mt-3" type="submit">Solicitar atendimento</button>
+                </form>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="p-4 bg-white rounded-4 shadow-sm border h-100">
+                <div class="d-flex align-items-center gap-3 mb-3">
+                  <div class="rounded-circle bg-success-subtle text-success p-3"><i class="bi bi-bag-heart fs-4"></i></div>
+                  <div>
+                    <p class="text-uppercase small text-muted mb-1">Formulário</p>
+                    <h3 class="h5 fw-bold mb-0">Rede de Artesãs</h3>
+                  </div>
+                </div>
+                <form id="form-artesas" class="needs-validation" novalidate>
+                  <div class="mb-3">
+                    <label class="form-label required" for="nome-artesas">Nome completo</label>
+                    <input class="form-control" id="nome-artesas" name="nome" type="text" required />
+                    <div class="invalid-feedback">Informe seu nome.</div>
+                  </div>
+                  <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label class="form-label required" for="cpf-artesas">CPF</label>
+                      <input class="form-control" id="cpf-artesas" name="cpf" type="text" placeholder="000.000.000-00" required />
+                      <div class="invalid-feedback">Informe um CPF válido.</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label" for="cnpj-artesas">CNPJ (opcional)</label>
+                      <input class="form-control" id="cnpj-artesas" name="cnpj" type="text" placeholder="00.000.000/0000-00" />
+                    </div>
+                  </div>
+                  <div class="row g-3 mt-1">
+                    <div class="col-sm-6">
+                      <label class="form-label required" for="telefone-artesas">Telefone</label>
+                      <input class="form-control" id="telefone-artesas" name="telefone" type="tel" placeholder="(81) 9 0000-0000" required />
+                      <div class="invalid-feedback">Informe um telefone para contato.</div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="form-label" for="email-artesas">E-mail</label>
+                      <input class="form-control" id="email-artesas" name="email" type="email" placeholder="seunome@email.com" />
+                      <div class="invalid-feedback">Digite um e-mail válido.</div>
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label required" for="bairro-artesas">Bairro</label>
+                    <input class="form-control" id="bairro-artesas" name="bairro" type="text" required />
+                    <div class="invalid-feedback">Informe seu bairro.</div>
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label required" for="atividade-artesas">Atividade artesanal</label>
+                    <input class="form-control" id="atividade-artesas" name="atividade" type="text" placeholder="Ex.: bordado, cerâmica, biojoias" required />
+                    <div class="invalid-feedback">Descreva sua atividade.</div>
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label" for="portfolio-artesas">Portfólio ou redes sociais</label>
+                    <input class="form-control" id="portfolio-artesas" name="portfolio" type="url" placeholder="Link do Instagram ou site" />
+                  </div>
+                  <div class="mt-3">
+                    <label class="form-label" for="interesse-artesas">Interesse principal</label>
+                    <select class="form-select" id="interesse-artesas" name="interesse">
+                      <option value="">Selecione</option>
+                      <option>Formação e cursos</option>
+                      <option>Feiras e eventos</option>
+                      <option>Comercialização online</option>
+                      <option>Mentorias de negócio</option>
+                    </select>
+                  </div>
+                  <div class="form-check mt-3">
+                    <input class="form-check-input" id="sigilo-artesas" type="checkbox" required />
+                    <label class="form-check-label required" for="sigilo-artesas">Confirmo que as informações são verdadeiras e autorizo contato.</label>
+                    <div class="invalid-feedback">Confirme para prosseguir.</div>
+                  </div>
+                  <button class="btn btn-success w-100 mt-3" type="submit">Participar da rede</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="py-4 border-top bg-white">
+      <div class="container d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3">
+        <div>
+          <p class="mb-1 fw-semibold">Secretaria da Mulher do Recife</p>
+          <p class="mb-0 text-muted small">Respeito, proteção e oportunidades para todas as mulheres.</p>
+        </div>
+        <div class="d-flex flex-wrap align-items-center gap-3">
+          <a class="text-decoration-none text-primary" href="#">Política de privacidade</a>
+          <span class="text-muted">•</span>
+          <a class="text-decoration-none text-primary" href="#">Fale conosco</a>
+          <span class="text-muted">•</span>
+          <a class="text-decoration-none text-primary" href="#servicos">Voltar ao topo</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+          form.addEventListener('submit', event => {
+            if (!form.checkValidity()) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      })();
+    </script>
+  </body>
+</html>
