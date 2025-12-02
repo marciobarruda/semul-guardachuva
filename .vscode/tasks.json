@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "run-server",
+            "type": "shell",
+            "command": "powershell -ExecutionPolicy Bypass -File ${workspaceFolder}/server.ps1",
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "custom",
+                "pattern": {
+                    "regexp": "^.*Serving HTTP on.*$"
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Iniciando servidor",
+                    "endsPattern": "Serving HTTP on|Seguindo para o debug"
+                }
+            }
+        }
+    ]
+}
