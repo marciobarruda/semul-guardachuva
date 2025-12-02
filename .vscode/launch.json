@@ -1,0 +1,12 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "PowerShell",
+            "request": "launch",
+            "name": "Rodar Site (Ctrl+F5)",
+            "script": "${workspaceFolder}/run.ps1",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
